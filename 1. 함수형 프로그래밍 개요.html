@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>1.함수형프로그래밍개요.html</title>
+  </head>
+  <body>
+    <script>
+      /* 순수 함수 : 동일한 인자에 대해 동일한 결과 리턴 */
+      function add(a, b) {
+        return a + b;
+      }
+      console.log(add(1, 5));
+      console.log(add(1, 5));
+
+      /* 순수 함수 아님 : 부수효과가 있음 */
+      var c = 10;
+      function add2(a, b) {
+        return a + b + c;
+      }
+      console.log(add2(1, 5)); //16
+      var c = 20;
+      console.log(add2(1, 5)); //26
+
+      var c = 20;
+      function add3(a, b) {
+        c = b;
+        return a + b;
+      }
+      console.log("c:", c); //20
+      console.log(add3(1, 5));
+      console.log("c:", c); // 5
+      console.log(add3(1, 5));
+
+      var obj1 = { val: 10 };
+      function add4(obj, b) {
+        obj.val += b;
+      }
+      console.log(obj1.val);
+      add4(obj1, 20);
+      console.log(obj1.val);
+
+      /*다시 순수 함수*/
+      var obj1 = { val: 10 };
+      function add5(obj, b) {
+        return { val: obj.val + b };
+      }
+
+      console.log(obj1.val);
+      console.log(add5(obj1, 10));
+      console.log(obj1.val);
+      var obj2 = add5(obj1, 20);
+      console.log(obj2.val);
+
+      /*일급 함수 : 함수를 값으로 다룰 수 있음*/
+      var f1 = function (a) {
+        return a * a;
+      };
+      console.log(f1);
+
+      var f2 = add; //함수 대입
+      console.log(f2);
+
+      function f3(f) {
+        //인자로 함수르 받음
+        return f(); //함수의 실행값 리턴
+      }
+
+      console.log(
+        f3(function () {
+          return 10;
+        })
+      );
+      console.log(
+        f3(function () {
+          return 20;
+        })
+      );
+
+      /* add_maker */
+      function add_maker(a) {
+        return function (b) {
+          return a + b;
+        };
+      }
+      //10을 기억하는 closure
+      var add10 = add_maker(10);
+      console.log(add10(20));
+
+      var add5 = add_maker(5);
+      var add15 = add_maker(15);
+      console.log(add5(10));
+      console.log(add15(10));
+
+      function f4(f1, f2, f3) {
+        return f3(f1() + f2());
+      }
+
+      function f4(f1, f2, f3) {
+        return f3(f1() + f2());
+      }
+
+      console.log(
+        f4(
+          function () {
+            return 2;
+          }, //실행1
+          function () {
+            return 1;
+          }, //실행2
+          function (a) {
+            return a * a;
+          } //실행3
+        )
+      ); //9
+    </script>
+  </body>
+</html>
