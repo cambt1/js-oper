@@ -29,8 +29,10 @@
       // 컬렉션 중심 프로그래밍의 유형별 함수 만들기
 
       // 1. 수집하기 - map
+      //   1. values : 값으로만 이루어진 배열 뱉음
+      console.log(users[0]);
+      console.log(_keys(users[0]));
       console.log(_values(users[0]));
-      //   1. values
       //   2. pluck
       console.log(_pluck(users, "age"));
       console.log(_pluck(users, "name"));
@@ -186,7 +188,7 @@
         console.log
       );
 
-      console.clear();
+      // console.clear();
 
       //   1. min, max, min_by, max_by
 
@@ -248,7 +250,7 @@
 
       console.log(_pairs(users[0]));
 
-      console.clear();
+      // console.clear();
 
       var f1 = _pipe(
         _count_by(function (user) {
@@ -256,6 +258,7 @@
         }),
         _map((count, key) => `<li>${key}대는 ${count}명 입니다.</li>`),
         (list) => "<ul>" + list.join("") + "</ul>",
+        //document는 직접 this여야 사용가능하므로 아래와 같이 binding
         document.write.bind(document)
       );
 

@@ -120,10 +120,11 @@ function _go(arg) {
 
 var _values = _map(_identity);
 
+//들어온 값을 그대로 return
 function _identity(val) {
   return val;
 }
-
+//해당 키값을 return
 var _pluck = _curryr(function (data, key) {
   return _map(data, _get(key));
 });
@@ -134,7 +135,9 @@ function _negate(func) {
   };
 }
 
+//조건에 일치하지 않는 대상을 filter
 var _reject = _curryr(function (data, predi) {
+  //_negate로 false를 찾는 동작이 됨
   return _filter(data, _negate(predi));
 });
 
@@ -175,6 +178,7 @@ var _group_by = _curryr(function (data, iter) {
     function (grouped, val) {
       return _push(grouped, iter(val), val);
     },
+    //최종결과가 {}이기 때문에 초기화를 {}로 해줌
     {}
   );
 });
@@ -184,7 +188,9 @@ var _inc = function (count, key) {
   return count;
 };
 
+//_group_by의 key에 따른 배열내 객체가 몇 개 있는지
 var _count_by = _curryr(function (data, iter) {
+  //data를 돌면서 iter인 특정함수를 실행
   return _reduce(
     data,
     function (count, val) {
